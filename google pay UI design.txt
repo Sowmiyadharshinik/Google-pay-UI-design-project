@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class GooglePayIntegration {
+  static const platform = MethodChannel('google_pay_integration');
+
+  static Future<void> startGooglePayPayment() async {
+    try {
+      await platform.invokeMethod('startGooglePayPayment');
+    } on PlatformException catch (e) {
+      print("Failed to start Google Pay payment: '${e.message}'.");
+    }
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Google Pay Ui design'),
+        ),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              GooglePayIntegration.startGooglePayPayment();
+            },
+            child: Text('Pay with Google Pay'),
+          ),
+        ),
+      ),
+    );
+  }
+}
